@@ -11,7 +11,7 @@ headers = {"API-Key": f"{API_Key}", "Content-Type": "application/json"}
 apm_query = """query GetSpans {
   actor {
     account(id: 1234567) {
-      nrql(query: "SELECT timestamp, duration, request.uri from Transaction WHERE appName = 'FlaskApp - Heroku (APM)' SINCE 24 HOURS AGO LIMIT MAX") {
+      nrql(query: "SELECT timestamp, duration, request.uri from Transaction WHERE appName = 'FlaskApp - Heroku (APM)' SINCE 6 MONTHS AGO LIMIT MAX") {
         results
       }
     }
@@ -29,7 +29,7 @@ else:
 # Convert UNIX epoch time to YYYY-MM-DD HH:mm:ss AM/PM and convert timezone as needed
 df.sort_values(by=["timestamp"], inplace=True)
 df["timestamp"] = pd.to_datetime(df["timestamp"], unit="ms")
-df["timestamp"] = df["timestamp"].dt.tz_localize("Etc/GMT+2").dt.tz_convert("America/Toronto").dt.strftime(date_format = "%I:%M:%S %p")
+df["timestamp"] = df["timestamp"].dt.tz_localize("UTC").dt.tz_convert("America/Toronto").dt.strftime(date_format = "%Y-%m-%d %I:%M:%S %p")
 #df.head()
 
 # Plot the counts.
@@ -41,7 +41,7 @@ ax.scatter(pd.to_datetime(df["timestamp"]), 1000*df[(df["request.uri"]=="/ping")
 plt.title("New Relic GraphQL Example", fontsize=16)
 plt.xlabel("Timestamp", fontsize=12)
 fig.autofmt_xdate()
-xfmt = mdates.DateFormatter('%I:%M %p')
+xfmt = mdates.DateFormatter('%Y-%m-%d %I:%M %p')
 ax.xaxis.set_major_formatter(xfmt)
 plt.ylabel("Seconds", fontsize=12)
 plt.tick_params(axis="both", which="major", labelsize=16)
