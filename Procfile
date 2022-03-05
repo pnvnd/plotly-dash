@@ -1,1 +1,1 @@
-web: python wsgi:flaskapp
+web: python wsgi.py
