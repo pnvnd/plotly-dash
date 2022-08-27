@@ -11,8 +11,8 @@ from covid import covid
 flaskapp.register_blueprint(covid)
 
 # Import Plotly Dash application into Flask
-from dashboard import init_dashboard
-app = init_dashboard(flaskapp)
+# from dashboard import init_dashboard
+# app = init_dashboard(flaskapp)
 
 # This will exceed memory quota on Heroku
 # from barchart import init_barchart
