@@ -1,1 +1,1 @@
-web: gunicorn wsgi:flaskapp
+web: gunicorn index:flaskapp
